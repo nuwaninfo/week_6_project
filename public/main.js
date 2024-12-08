@@ -10,7 +10,7 @@ offerForm.addEventListener("submit", async function (event) {
   formData.append("description", document.getElementById("description").value)
 
   try {
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch("/upload", {
       method: "POST",
       body: formData,
     })
