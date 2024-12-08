@@ -8,6 +8,7 @@ offerForm.addEventListener("submit", async function (event) {
   formData.append("title", document.getElementById("title").value)
   formData.append("price", document.getElementById("price").value)
   formData.append("description", document.getElementById("description").value)
+  formData.append("image", document.getElementById("image").value)
 
   try {
     const response = await fetch("/upload", {

@@ -39,6 +39,7 @@ const OfferSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
+    imageId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "Image" },
 });
 const Offer = mongoose_1.default.model("Offer", OfferSchema);
 exports.Offer = Offer;
