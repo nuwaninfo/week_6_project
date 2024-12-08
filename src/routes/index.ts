@@ -20,6 +20,7 @@ router.post("/upload", upload.none(), async (req: Request, res: Response) => {
       description: req.body.description,
     })
     await offer.save()
+    return res.status(201).json({ message: "Offer saved successfully" })
     console.log("Offer saved!")
   } catch (error: any) {
     console.error(`Error while saving data: ${error}`)
