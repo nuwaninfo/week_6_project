@@ -38,16 +38,41 @@ async function getrOffers() {
 
     offers.forEach((offer) => {
       const offerDiv = document.createElement("div")
-      offerDiv.classList.add("offerDiv")
+      offerDiv.classList.add("offerDiv", "col", "s12", "m6", "l4")
 
-      offerDiv.innerHTML = `
-        <img src="${
-          offer.imagePath ? offer.imagePath : "/images/placeholder.png"
-        }" alt="${offer.title}" style="max-width: 200px; height: auto;" />
-        <p><strong>Title:</strong> ${offer.title}</p>
-        <p><strong>Description:</strong> ${offer.description}</p>
-        <p><strong>Price:</strong> $${offer.price}</p>
-      `
+      const cardDiv = document.createElement("div")
+      cardDiv.classList.add("card", "hoverable")
+
+      const cardImageDiv = document.createElement("div")
+      cardImageDiv.classList.add("card-image")
+
+      const img = document.createElement("img")
+      img.classList.add("responsive-img")
+      img.src = offer.imagePath ? offer.imagePath : "/images/placeholder.png"
+      img.alt = offer.title
+
+      const spanTitle = document.createElement("span")
+      spanTitle.classList.add("card-title")
+      spanTitle.textContent = offer.title
+
+      cardImageDiv.appendChild(img)
+      cardImageDiv.appendChild(spanTitle)
+
+      const cardContentDiv = document.createElement("div")
+      cardContentDiv.classList.add("card-content")
+
+      const descriptionP = document.createElement("p")
+      descriptionP.textContent = `Description: ${offer.description}`
+
+      const priceP = document.createElement("p")
+      priceP.textContent = `Price: $${offer.price}`
+
+      cardContentDiv.appendChild(descriptionP)
+      cardContentDiv.appendChild(priceP)
+
+      cardDiv.appendChild(cardImageDiv)
+      cardDiv.appendChild(cardContentDiv)
+      offerDiv.appendChild(cardDiv)
 
       offersContainer.appendChild(offerDiv)
     })
