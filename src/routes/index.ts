@@ -48,4 +48,45 @@ router.post(
   }
 )
 
+router.get("/offers", async (req: Request, res: Response) => {
+  try {
+    const offers: IOffer[] | null = await Offer.find()
+
+    if (!offers) {
+      return res.status(404).json({ message: "No offers found" })
+    }
+    // Map through the offers to fetch corresponding images
+    const offersWithImages = await Promise.all(
+      offers.map(async (offer) => {
+        let image = null
+
+        // Check if offer has an imageId and fetch the image if it exists
+        if (offer.imageId) {
+          image = await Image.findById(offer.imageId) // Fetch image by ID
+        }
+
+        /*return {
+          title: offer.title,
+          price: offer.price,
+          description: offer.description,
+          image: image ? { filename: image.filename, path: image.path } : null, // Attach image data or null
+        }*/
+
+        return {
+          title: offer.title,
+          description: offer.description,
+          price: offer.price,
+          imagePath: image ? image.path : null, // Include image path if it exists
+        }
+      })
+    )
+    return res.status(200).json(offersWithImages) // Return offers with images
+    //res.status(200).json(images)
+    console.log("Images fetched successfully from database")
+  } catch (error: any) {
+    console.error(`Error while fetching a file: ${error}`)
+    return res.status(500).json({ message: "Internal server error" })
+  }
+})
+
 export default router
