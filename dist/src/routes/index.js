@@ -48,12 +48,10 @@ router.get("/offers", async (req, res) => {
         if (!offers) {
             return res.status(404).json({ message: "No offers found" });
         }
-        // Map through the offers to fetch corresponding images
         const offersWithImages = await Promise.all(offers.map(async (offer) => {
             let image = null;
-            // Check if offer has an imageId and fetch the image if it exists
             if (offer.imageId) {
-                image = await Image_1.Image.findById(offer.imageId); // Fetch image by ID
+                image = await Image_1.Image.findById(offer.imageId);
             }
             /*return {
               title: offer.title,
